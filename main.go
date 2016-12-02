@@ -88,6 +88,8 @@ func (h *SlowHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	logRequest(id, fmt.Sprintf("Sending first byte of %d.", len(h.ContentToServe)))
 	_, err = w.Write([]byte{h.ContentToServe[0]})
 
+	attemptFlush(id, w)
+
 	if err != nil {
 		logRequest(id, fmt.Sprintf("Error sending byte: %s", err.Error()))
 	}
@@ -104,6 +106,14 @@ func (h *SlowHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	logRequest(id, "Complete.")
+}
+
+func attemptFlush(id int32, w http.ResponseWriter) {
+	if f, ok := w.(http.Flusher); ok {
+		f.Flush()
+	} else {
+		logRequest(id, "Unable to flush the HTTP response because the system doesn't support it.")
+	}
 }
 
 func logRequest(id int32, msg string) {
