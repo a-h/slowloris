@@ -31,6 +31,7 @@ func main() {
 	wg.Add(*n)
 	for i := 0; i < *n; i++ {
 		go func() {
+			defer wg.Done()
 			r, err := http.NewRequest("POST", *url, sr)
 			if err != nil {
 				fmt.Printf("invalid request: %v\n", err)
