@@ -1,16 +1,33 @@
+# slorloris
+
 Run a web server which waits a configurable amount of time before responding. See also https://adrianhesketh.com/2016/12/03/testing-slow-http-responses/
 
-# Build
+## Install
+
+### With Go
+
+* Run `go install github.com/a-h/slowloris@latest`
+
+## Build
+
+### With Go
+
+* Install Go.
+* Run `go build`.
+* `./slowloris`
+
+### With Docker
+
 ```
 docker build -t slowloris .
 ```
 
-# Run
 ```
 docker run -it -p8080:8080 --rm slowloris
 ```
 
-# Use
+## Usage
+
 ```
 curl -I localhost:8080/foo
 ```
