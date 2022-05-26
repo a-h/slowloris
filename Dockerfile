@@ -4,8 +4,8 @@ ADD . /app
 
 WORKDIR /app
 
-RUN go mod init main.go ; go get
+RUN go build
 
-ENTRYPOINT [ "go", "run", "main.go" ]
+ENTRYPOINT [ "/app/slowloris" ]
 
 CMD [ "-delayBeforeFirstByte", "10s", "-delayBeforeLastByte", "10s" ]
